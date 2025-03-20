@@ -1,0 +1,31 @@
+.splash-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+  animation: morph 2s ease-in-out forwards;
+}
+
+@keyframes morph {
+  0% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    width: 150px;
+    height: 150px;
+    transform: scale(1);
+  }
+}

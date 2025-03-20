@@ -1,0 +1,219 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/**** Left Section ****/
+.left-section {
+  flex: 1;
+  padding-left: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateX(-100%);
+  opacity: 0;
+  animation: slideInLeft 1s ease-out forwards;
+}
+
+/**** Logo ****/
+.logo {
+  width: 40px;
+  margin-top: 0;
+  padding: 0;
+  margin-bottom: 50px;
+  margin-left: 0px;
+}
+
+/**** Tagline ****/
+.tagline {
+  width: 170px;
+  background-color: transparent;
+  color: #fff;
+  font-family: 'Marcellus', serif;
+  border: 1px solid #fff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  font-family: 'Mangal', serif;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 14px;
+  opacity: 0.7;
+  font-family: 'Marcellus', serif;
+  margin-bottom: 30px;
+}
+
+/**** Stats Section ****/
+.stats {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 10px;
+}
+
+.stats div {
+  text-align: center;
+}
+
+.stats span {
+  font-family: 'Mangal', serif;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.stats .separator {
+  height: 60px;
+  width: 0.8px;
+  background-color: #fff;
+}
+
+/**** Visit Button ****/
+.visit-site {
+  background-color: transparent;
+  color: #fff;
+  width: 170px;
+  font-size: 16px;
+  font-family: 'Marcellus', serif;
+  padding: 10px 20px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.visit-site:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/**** Right Section ****/
+.right-section {
+  flex: 0.5;
+  background-color: #333;
+  padding: 20px 30px;
+  border-radius: 10px;
+  margin: 100px 170px 100px 0px;
+  transform: translateX(100%);
+  opacity: 0;
+  animation: slideInRight 1s ease-out forwards;
+}
+
+/* Title in Right Section */
+h2 {
+  font-family: 'Mangal', serif;
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 40px;
+}
+
+/**** Form Styling ****/
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background-color: #555;
+  padding: 7px 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.label {
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #bbb;
+  font-family: 'Marcellus', serif;
+}
+
+
+.input-group .icon img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  transition: opacity 0.3s;
+  opacity: 0.7;
+}
+
+.input-group .separator {
+  height: 25px;
+  width: 1px;
+  background-color: #bbb;
+  margin-right: 10px;
+}
+
+/* Input Field */
+input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  flex: 1;
+}
+
+input::placeholder {
+  color: #bbb;
+}
+
+/* Button */
+.login-btn {
+  background-color: #fff;
+  font-size: 15px;
+  color: #000;
+  font-family: 'Mangal', serif;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #ddd;
+}
+
+/**** ANIMATIONS ****/
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
