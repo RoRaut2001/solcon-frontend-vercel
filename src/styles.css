@@ -1,6 +1,100 @@
-/* You can add global styles to this file, and also import other style files */
+/*** can add global styles to this file, and also import other style files ***/
+@import 'ngx-toastr/toastr';
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+/**** success toastr style ****/
+.toast-success {
+  background-color: mediumseagreen;
+  color: white !important;
+  font-family: 'Mangal', sans-serif !important;
+  border-left: 3px solid darkgreen !important;
+  padding: 10px;
+  font-size: 13px !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+
+}
+
+.toast-success .toast-title {
+  font-weight: bold;
+  width: 100%;
+}
+
+.toast-success .toast-message {
+  flex: 1;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toast-success .toast-icon {
+
+  margin-right: 10px;
+}
+
+.toast-success .toast-close-button {
+  font-weight: normal !important;
+  opacity: 0.8 !important;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 16px !important;
+}
+
+
+/**** error toastr style ****/
+.toast-error {
+  background-color: #C41E3A !important;
+  color: white !important;
+  font-family: 'Mangal', sans-serif !important;
+  border-left: 3px solid #FAA0A0;
+  padding: 10px;
+  font-size: 13px !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+
+}
+
+.toast-error .toast-title {
+  font-weight: bold;
+  width: 100%;
+}
+
+.toast-error .toast-message {
+  flex: 1;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toast-error .toast-icon {
+
+  margin-right: 10px;
+}
+
+.toast-error .toast-close-button {
+  font-weight: normal !important;
+  opacity: 0.8 !important;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 16px !important;
+}
+
+
+

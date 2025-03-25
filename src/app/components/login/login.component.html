@@ -8,11 +8,12 @@
 <div class="container">
   <!-- Left Section -->
   <div class="left-section">
-    <img src="/assets/images/solcon_logo.png" alt="Logo" class="logo" />
+    <img src="assets/images/solcon_logo.png" alt="Logo" class="logo" />
     <button class="tagline"># No.1 Platform</button>
     <h1>SHAPING THE FUTURE OF <br>DEEP TECH INVESTMENTS</h1>
     <p>
-      Solcon’s deep tech strategy is guided by the firms’ vision to<br>deliver great returns to investors on a long-term basis
+      Solcon’s deep tech strategy is guided by the firms’ vision to<br>
+      deliver great returns to investors on a long-term basis
     </p>
     <div class="stats">
       <div>
@@ -30,7 +31,7 @@
         <p>Locations</p>
       </div>
     </div>
-    <button class="visit-site">
+    <button class="visit-site" (click)="visitSite()">
       Visit Site →
     </button>
   </div>
@@ -38,29 +39,28 @@
   <!-- Right Section -->
   <div class="right-section">
     <h2>Login Here</h2>
-    <form>
+    <form [formGroup]="loginForm">
       <label class="label" for="username">Username</label>
       <div class="input-group">
           <span class="icon">
-            <img ngSrc="assets/svg/user.svg" alt="User Icon" height="31" width="31"/>
+            <img src="assets/svg/user.svg" alt="User Icon" height="31" width="31"/>
           </span>
         <div class="separator"></div>
-        <input type="email" id="username" placeholder="user@gmail.com" />
+        <input type="text" id="username" formControlName="username" placeholder="user@gmail.com" />
       </div>
       <label class="label" for="password">Password</label>
       <div class="input-group">
         <span class="icon">
-          <img ngSrc="assets/svg/password.svg" alt="Lock Icon" height="31" width="31"/>
+          <img src="assets/svg/password.svg" alt="Lock Icon" height="31" width="31"/>
         </span>
         <div class="separator"></div>
-        <input type="password" id="password" placeholder="•••••" />
+        <input type="password" id="password" formControlName="password" placeholder="•••••" />
       </div>
-      <button type="submit" class="login-btn">
+      <button type="button" class="login-btn" (click)="onLogin()">
         Click to Login
       </button>
     </form>
   </div>
 </div>
-
 </body>
 </html>

@@ -163,6 +163,7 @@ form {
   width: 1px;
   background-color: #bbb;
   margin-right: 10px;
+  margin-left: 10px;
 }
 
 /* Input Field */
@@ -177,6 +178,7 @@ input {
 input::placeholder {
   color: #bbb;
 }
+
 
 /* Button */
 .login-btn {
@@ -224,6 +226,10 @@ input::placeholder {
     align-items: center;
     height: auto;
     padding: 20px;
+  }
+
+  .tagline {
+    display: none;
   }
 
   .left-section {
