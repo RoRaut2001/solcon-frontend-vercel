@@ -17,6 +17,6 @@ export class SplashComponent implements OnInit {
      step 3: If token is not present navigate to login
      ****/
     const token = localStorage.getItem('token');
-    token ?  this.router.navigate(['/dashboard']): this.router.navigate(['/login']);
+    token ?  this.router.navigate(['/dashboard']): setTimeout(() => { this.router.navigate(['/login']); }, 3000);
   }
 }
