@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
+import {LoadingService} from '../../services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,14 @@ import {AuthService} from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private loadingService: LoadingService) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -27,7 +34,7 @@ export class LoginComponent implements OnInit {
     /****
      step 1: Get Token from session
      step 2: If found navigate to dashboard
-     step 3: If token is not present navigate to login
+     step 3: If token is not present navigate to Login screen
      ****/
     const token = localStorage.getItem('token');
     token ?  this.router.navigate(['/dashboard']): this.router.navigate(['/login']);
@@ -76,6 +83,7 @@ export class LoginComponent implements OnInit {
      step 3: If Login successful set token in session and navigate to dashboard
      step 4: update header from ApiClient with new token
      ****/
+    this.isLoading = true;
     this.authService.login(username,password).subscribe(({
       next:(response) => {
         this.toastr.success('Login Successful! Redirecting...', 'Success', {
@@ -86,6 +94,7 @@ export class LoginComponent implements OnInit {
         });
         localStorage.setItem('token', response.token);
         setTimeout(() => {
+          this.isLoading = false;
           this.router.navigate(['/dashboard']).then(() => {
             console.log('Navigation Successful!');
           }).catch(err => {
@@ -100,6 +109,7 @@ export class LoginComponent implements OnInit {
         }, 1000);
       },
       error: error => {
+        this.isLoading = false;
         this.toastr.error('Login Failed', 'Oops!', {
           timeOut: 3000,
           closeButton: true,

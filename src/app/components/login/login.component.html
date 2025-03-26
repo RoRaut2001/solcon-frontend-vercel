@@ -56,8 +56,9 @@
         <div class="separator"></div>
         <input type="password" id="password" formControlName="password" placeholder="•••••" />
       </div>
-      <button type="button" class="login-btn" (click)="onLogin()">
-        Click to Login
+      <button [disabled]="isLoading" (click)="onLogin()" class="login-btn">Click to Login
+        <ng-container *ngIf="!isLoading">Login</ng-container>
+        <div *ngIf="isLoading" class="spinner"></div>
       </button>
     </form>
   </div>
