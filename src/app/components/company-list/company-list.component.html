@@ -1,65 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company List</title>
+  <link rel="stylesheet" href="company-list.component.css">
+</head>
 <body>
 <div class="heading">
   COMPANY LIST
-    <button class="logout-btn" (click)="logout()">
-      Logout<mat-icon>logout</mat-icon>
-    </button>
+  <button class="logout-btn" (click)="logout()">
+    Logout <mat-icon>logout</mat-icon>
+  </button>
 </div>
 <p class="company-name">Home | Company Lists | {{ selectedCompany().companyName }}</p>
 <div class="divider-line"></div>
 
-<!-- Form Wrapper -->
 <form [formGroup]="companyForm">
   <div class="filter-container">
     <div class="dropdowns">
-      <!-- Month Dropdown -->
       <div class="dropdown-group">
         <label for="month">Month</label>
-        <select id="month" class="dropdown" formControlName="month"
-                [class.error-border]="companyForm.get('month')?.touched && companyForm.get('month')?.invalid">
+        <select id="month" class="dropdown" formControlName="month">
           <option value="" disabled selected>Select</option>
           <option *ngFor="let month of months" [value]="month">{{ month }}</option>
         </select>
       </div>
 
-      <!-- Year Dropdown -->
       <div class="dropdown-group">
         <label for="year">Year</label>
-        <select id="year" class="dropdown" formControlName="year"
-                [class.error-border]="companyForm.get('year')?.touched && companyForm.get('year')?.invalid">
+        <select id="year" class="dropdown" formControlName="year">
           <option value="" disabled selected>Select</option>
           <option *ngFor="let y of years" [value]="y">{{ y }}</option>
         </select>
       </div>
 
-      <!-- Quarter Dropdown -->
       <div class="dropdown-group">
         <label for="quarter">Quarter</label>
-        <select id="quarter" class="dropdown" formControlName="quarter"
-                [class.error-border]="companyForm.get('quarter')?.touched && companyForm.get('quarter')?.invalid">
+        <select id="quarter" class="dropdown" formControlName="quarter">
           <option value="" disabled selected>Select</option>
           <option *ngFor="let q of quarters" [value]="q">{{ q }}</option>
         </select>
       </div>
 
-      <!-- File Input -->
       <div class="dropdown-group">
         <label for="fileInput">Select File</label>
-        <button type="button" class="file-select-btn" (click)="openFileDialog()"
-                [class.error-border]="companyForm.get('file')?.touched && companyForm.get('file')?.invalid">
+        <button type="button" class="file-select-btn" (click)="openFileDialog()">
           {{ selectedFileName || 'Select File' }}
         </button>
         <input type="file" id="fileInput" (change)="onFileSelected($event)" hidden />
       </div>
     </div>
 
-    <!-- Buttons in One Row -->
     <div class="button-row">
-      <button class="upload-btn" type="button" (click)="uploadFile()">Upload
-        <span *ngIf="!isUploading"></span>
-        <span *ngIf="isUploading">Uploading...</span></button>
+      <button class="upload-btn" type="button" (click)="uploadFile()">Upload</button>
       <button class="clear-btn" type="button" (click)="clearFilters()">Clear</button>
     </div>
   </div>
 </form>
 </body>
+</html>

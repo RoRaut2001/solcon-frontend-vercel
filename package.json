@@ -23,6 +23,7 @@
     "@tailwindcss/postcss": "^4.0.16",
     "angular-toastr": "^2.1.1",
     "axios": "^1.8.4",
+    "bootstrap": "^5.3.3",
     "lucide-angular": "^0.484.0",
     "ngx": "^0.0.1",
     "ngx-spinner": "^19.0.0",

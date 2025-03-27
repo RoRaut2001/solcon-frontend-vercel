@@ -134,6 +134,12 @@ form {
   margin-bottom: 15px;
 }
 
+input:focus {
+  outline: none; /* Removes the default focus outline */
+  border: none; /* Removes any extra borders */
+  box-shadow: none; /* Ensures no glow or highlight */
+}
+
 .input-group .icon {
   margin-right: 10px;
 }

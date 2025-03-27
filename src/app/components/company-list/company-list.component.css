@@ -1,29 +1,29 @@
-body{
+html,body {
   background-color: #27223D;
   height: 100vh;
   color: white;
   padding: 30px;
-  margin-left: 1px ;
+  margin-left: 1px;
 }
 
-.heading{
+.heading {
   justify-content: space-between;
   text-align: left;
   display: flex;
   flex-direction: row;
-  font-family: Mangal, serif !important ;
+  font-family: Mangal, serif !important;
   font-weight: bold;
   font-size: 20px;
 }
 
-.company-name{
+.company-name {
   margin-top: 5px;
   text-align: left;
-  font-family: Mangal, serif !important ;
+  font-family: Mangal, serif !important;
   font-size: 15px;
 }
 
-.divider-line{
+.divider-line {
   background-color: white;
   height: 0.5px;
   width: 50%;
@@ -38,18 +38,20 @@ body{
   background-color: #0F0D20;
   padding: 5px;
   border-radius: 5px;
+  flex-wrap: wrap;
 }
 
-.dropdowns, file-select-btn {
-  font-family: 'Marcellus', serif !important ;
+.dropdowns, .file-select-btn {
+  font-family: 'Marcellus', serif !important;
   font-size: 13px !important;
   padding: 5px;
   margin: 5px;
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.file-select-btn{
+.file-select-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,15 +68,17 @@ body{
 }
 
 label {
-  font-family: Mangal, serif !important ;
+  font-family: Mangal, serif !important;
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 5px;
   color: white;
 }
+
 .error-border {
   border: 0.5px solid red !important;
 }
+
 .dropdown {
   padding: 8px;
   border-radius: 2px;
@@ -85,9 +89,10 @@ label {
 
 /* Buttons in One Row */
 .button-row {
-  align-items: baseline;
+  align-items: center;
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .upload-btn, .clear-btn {
@@ -97,7 +102,7 @@ label {
 }
 
 .upload-btn {
-  font-family: 'Mangal', serif !important ;
+  font-family: 'Mangal', serif !important;
   font-size: 13px !important;
   padding: 7px 12px;
   background: white;
@@ -109,7 +114,7 @@ label {
 
 .clear-btn {
   margin-right: 25px;
-  font-family: 'Mangal', serif !important ;
+  font-family: 'Mangal', serif !important;
   font-size: 14px !important;
   padding: 7px 12px;
   background: white;
@@ -130,4 +135,71 @@ label {
   cursor: pointer;
 }
 
+/* RESPONSIVENESS */
+@media (max-width: 1024px) {
+  .filter-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
+  .dropdowns {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .button-row {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1000px) {  /* For tablets & mobile */
+  .dropdowns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two items per row */
+    gap: 10px;
+    width: 100%;
+  }
+
+  .dropdown-group {
+    width: 100%; /* Ensures full width */
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: nowrap; /* Keep buttons in a single row */
+    justify-content: center; /* Center the buttons */
+    width: 100%;
+    gap: 15px;
+  }
+
+  .upload-btn, .clear-btn {
+    width: auto; /* Make buttons full width for better mobile UI */
+    flex-direction: column;
+  }
+}
+
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .heading {
+    font-size: 16px;
+  }
+
+  .company-name {
+    font-size: 12px;
+  }
+
+  .dropdowns {
+    width: 100%;
+  }
+
+  .upload-btn, .clear-btn {
+    font-size: 12px;
+    padding: 5px;
+  }
+}
