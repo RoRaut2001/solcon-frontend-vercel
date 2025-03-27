@@ -1,47 +1,43 @@
+/* General Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.container {
-  display: flex;
-  height: 100vh;
+body, html {
+  height: 100%;
   background-color: #000;
   color: #fff;
-  overflow: hidden;
+  scroll-behavior: smooth;
+  overflow: auto;
 }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
+/* Container Layout */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
 }
 
-/**** Left Section ****/
+/* Left Section */
 .left-section {
   flex: 1;
-  padding-left: 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transform: translateX(-100%);
-  opacity: 0;
-  animation: slideInLeft 1s ease-out forwards;
+  text-align: left;
+  padding: 40px;
+  animation: fadeIn 1s ease-in;
 }
 
-/**** Logo ****/
 .logo {
-  width: 40px;
-  margin-top: 0;
-  padding: 0;
-  margin-bottom: 50px;
-  margin-left: 0px;
+  width: 50px;
+  margin-bottom: 30px;
 }
 
-/**** Tagline ****/
 .tagline {
-  width: 170px;
-  background-color: transparent;
+  display: inline-block;
+  background: transparent;
   color: #fff;
   font-family: 'Marcellus', serif;
   border: 1px solid #fff;
@@ -65,11 +61,12 @@ p {
   margin-bottom: 30px;
 }
 
-/**** Stats Section ****/
+/* Stats Section */
 .stats {
   display: flex;
-  gap: 30px;
-  margin-bottom: 10px;
+  gap: 20px;
+  justify-content: left;
+  margin-bottom: 20px;
 }
 
 .stats div {
@@ -77,97 +74,68 @@ p {
 }
 
 .stats span {
-  font-family: 'Mangal', serif;
   font-size: 24px;
   font-weight: bold;
 }
 
-.stats .separator {
-  height: 60px;
-  width: 0.8px;
-  background-color: #fff;
+.separator {
+  width: 1px;
+  height: 50px;
+  background: #fff;
 }
 
-/**** Visit Button ****/
+/* Visit Button */
 .visit-site {
-  background-color: transparent;
+  background: transparent;
   color: #fff;
-  width: 170px;
   font-size: 16px;
-  font-family: 'Marcellus', serif;
   padding: 10px 20px;
   border: 1px solid #fff;
   border-radius: 10px;
-  cursor: pointer;
   transition: 0.3s;
 }
 
 .visit-site:hover {
-  background-color: #fff;
+  background: #fff;
   color: #000;
 }
 
-/**** Right Section ****/
+/* Right Section */
 .right-section {
   flex: 0.5;
-
-  background-color: #333;
-  padding: 20px 30px;
+  background: #222;
+  padding: 30px;
   border-radius: 10px;
-  margin: 100px 170px 100px 0px;
-  transform: translateX(100%);
-  opacity: 0;
-  animation: slideInRight 1s ease-out forwards;
+  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+  animation: fadeIn 1s ease-in;
 }
 
-/* Title in Right Section */
-h2 {
-  font-family: 'Mangal', serif;
-  text-align: center;
-  font-size: 22px;
-  margin-bottom: 40px;
-}
-
-/**** Form Styling ****/
+/* Form Styling */
 form {
   display: flex;
   flex-direction: column;
 }
 
+.label {
+  font-size: 12px;
+  color: #bbb;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
 .input-group {
+  background: #333;
+  padding: 10px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
-  background-color: #555;
-  padding: 7px 10px;
-  border-radius: 5px;
   margin-bottom: 15px;
 }
 
-.label {
-  margin-bottom: 10px;
-  font-size: 12px;
-  color: #bbb;
-  font-family: 'Marcellus', serif;
-}
-
-
-.input-group .icon img {
-  width: 25px;
-  height: 25px;
-  object-fit: contain;
-  transition: opacity 0.3s;
-  opacity: 0.7;
-}
-
-.input-group .separator {
-  height: 25px;
-  width: 1px;
-  background-color: #bbb;
+.input-group .icon {
   margin-right: 10px;
-  margin-left: 10px;
 }
 
-/* Input Field */
 input {
   background: transparent;
   border: none;
@@ -180,32 +148,21 @@ input::placeholder {
   color: #bbb;
 }
 
-
-/* Button */
+/* Login Button */
 .login-btn {
-  background-color: #fff;
-  font-size: 15px;
+  background: #fff;
   color: #000;
-  margin-top: 10px;
-  font-family: 'Mangal', serif;
+  font-size: 16px;
   padding: 10px;
-  border: none;
   border-radius: 5px;
-  cursor: pointer;
   transition: 0.3s;
 }
 
 .login-btn:hover {
-  background-color: #ddd;
+  background: #ddd;
 }
 
-/* Disable button during loading */
-.login-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Centered Button Spinner */
+/* Spinner */
 .spinner {
   width: 16px;
   height: 16px;
@@ -215,7 +172,6 @@ input::placeholder {
   animation: spin 0.6s linear infinite;
   display: inline-block;
   margin-left: 5px;
-  vertical-align: middle;
 }
 
 @keyframes spin {
@@ -223,78 +179,35 @@ input::placeholder {
   100% { transform: rotate(360deg); }
 }
 
-
-/**** ANIMATIONS ****/
-@keyframes slideInLeft {
-  0% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInRight {
-  0% {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@media screen and (max-width: 768px) {
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
   .container {
+    height: 100vh;
+    padding: 40px;
+    width: 100vw;
     flex-direction: column;
-    align-items: center;
-    height: auto;
-    padding: 20px;
+    text-align: center;
   }
-
-  .tagline {
+  .tagline{
     display: none;
   }
 
   .left-section {
-    padding: 0;
-    text-align: center;
-    transform: translateX(0);
-    opacity: 1;
-    animation: none;
-  }
-
-  .stats {
-    justify-content: center;
-  }
-
-  .stats .separator {
-    display: none;
+    padding: 20px;
   }
 
   .right-section {
     width: 100%;
-    margin: 20px 0;
-    padding: 20px;
-    transform: translateX(0);
-    opacity: 1;
-    animation: none;
-    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
-  .input-group {
-    width: 100%;
+  .stats {
+    flex-direction: row;
+    gap: 10px;
   }
 
-  input {
-    width: 100%;
-  }
-
-  .login-btn, .visit-site {
-    width: 100%;
+  .separator {
+    width: 0.2px;
   }
 }
-
