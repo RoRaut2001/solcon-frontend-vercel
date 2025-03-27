@@ -17,7 +17,7 @@ body, html {
 .container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100vh;
 
 }
@@ -102,6 +102,8 @@ p {
 
 /* Right Section */
 .right-section {
+  align-items: center; /* Align everything to the top */
+  justify-content: center;
   flex: 0.5;
   background: #222;
   padding: 30px;
@@ -188,6 +190,7 @@ input::placeholder {
     flex-direction: column;
     text-align: center;
   }
+
   .tagline{
     display: none;
   }
