@@ -37,30 +37,32 @@
   </div>
 
   <!-- Right Section -->
-  <div class="right-section">
-    <h2>Login Here</h2>
-    <form [formGroup]="loginForm">
-      <label class="label" for="username">Username</label>
-      <div class="input-group">
+  <div class="main-right">
+    <div class="right-section">
+      <h2>Login Here</h2>
+      <form [formGroup]="loginForm">
+        <label class="label" for="username">Username</label>
+        <div class="input-group">
           <span class="icon">
             <img src="assets/svg/user.svg" alt="User Icon" height="31" width="31"/>
           </span>
-        <div class="separator"></div>
-        <input type="text" id="username" formControlName="username" placeholder="user@gmail.com" />
-      </div>
-      <label class="label" for="password">Password</label>
-      <div class="input-group">
+          <div class="separator"></div>
+          <input type="text" id="username" formControlName="username" placeholder="user@gmail.com" />
+        </div>
+        <label class="label" for="password">Password</label>
+        <div class="input-group">
         <span class="icon">
           <img src="assets/svg/password.svg" alt="Lock Icon" height="31" width="31"/>
         </span>
-        <div class="separator"></div>
-        <input type="password" id="password" formControlName="password" placeholder="•••••" />
-      </div>
-      <button [disabled]="isLoading" (click)="onLogin()" class="login-btn">Click to Login
-        <ng-container *ngIf="!isLoading"></ng-container>
-        <div *ngIf="isLoading" class="spinner"></div>
-      </button>
-    </form>
+          <div class="separator"></div>
+          <input type="password" id="password" formControlName="password" placeholder="•••••" />
+        </div>
+        <button [disabled]="isLoading" (click)="onLogin()" class="login-btn">Click to Login
+          <ng-container *ngIf="!isLoading"></ng-container>
+          <div *ngIf="isLoading" class="spinner"></div>
+        </button>
+      </form>
+    </div>
   </div>
 </div>
 </body>

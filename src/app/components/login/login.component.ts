@@ -5,13 +5,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {LoadingService} from '../../services/loading.service';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [ReactiveFormsModule]
+  imports: [ReactiveFormsModule, NgIf]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
     /****
      step 1: Get Token from session
      step 2: If found navigate to dashboard
-     step 3: If token is not present navigate to Login screen
+     step 3: If token is not present navigate to Log in screen
      ****/
     const token = localStorage.getItem('token');
     token ?  this.router.navigate(['/dashboard']): this.router.navigate(['/login']);
@@ -92,6 +93,8 @@ export class LoginComponent implements OnInit {
           positionClass: 'toast-top-right',
           progressBar: true,
         });
+        console.log(response);
+        console.log(response.token);
         localStorage.setItem('token', response.token);
         setTimeout(() => {
           this.isLoading = false;

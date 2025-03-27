@@ -110,6 +110,7 @@ p {
 /**** Right Section ****/
 .right-section {
   flex: 0.5;
+
   background-color: #333;
   padding: 20px 30px;
   border-radius: 10px;
@@ -185,6 +186,7 @@ input::placeholder {
   background-color: #fff;
   font-size: 15px;
   color: #000;
+  margin-top: 10px;
   font-family: 'Mangal', serif;
   padding: 10px;
   border: none;

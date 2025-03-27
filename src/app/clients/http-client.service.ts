@@ -53,4 +53,28 @@ export class ApiClientService {
   delete<T>(url: string, data: any): Observable<T> {
     return this.http.post<T>(`${this.baseurl}${url}`, data, {headers: this.getHeaders()});
   }
+
+  /* Method to handle file uploads using multipart form data */
+  uploadFile<T>(url: string, file: File, additionalData?: { [key: string]: any }): Observable<T> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    if (additionalData) {
+      Object.keys(additionalData).forEach((key) => {
+        formData.append(key, additionalData[key]);
+      });
+    }
+
+    // Retrieve token from localStorage
+    const token = localStorage.getItem('token');
+
+    // Set Authorization header if token exists
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http.post<T>(`${this.baseurl}${url}`, formData, { headers });
+  }
+
 }

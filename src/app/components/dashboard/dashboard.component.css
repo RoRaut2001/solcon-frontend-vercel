@@ -27,3 +27,10 @@ h1{
   background-color: #fff;
   color: #000;
 }
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+}
+

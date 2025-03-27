@@ -1,0 +1,133 @@
+body{
+  background-color: #27223D;
+  height: 100vh;
+  color: white;
+  padding: 30px;
+  margin-left: 1px ;
+}
+
+.heading{
+  justify-content: space-between;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  font-family: Mangal, serif !important ;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.company-name{
+  margin-top: 5px;
+  text-align: left;
+  font-family: Mangal, serif !important ;
+  font-size: 15px;
+}
+
+.divider-line{
+  background-color: white;
+  height: 0.5px;
+  width: 50%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0F0D20;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.dropdowns, file-select-btn {
+  font-family: 'Marcellus', serif !important ;
+  font-size: 13px !important;
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  gap: 1rem;
+}
+
+.file-select-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 2px;
+  border: 0.5px solid #ccc;
+}
+
+.dropdown-group {
+  padding: 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-family: Mangal, serif !important ;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: white;
+}
+.error-border {
+  border: 0.5px solid red !important;
+}
+.dropdown {
+  padding: 8px;
+  border-radius: 2px;
+  border: 0.5px solid #ccc;
+  background: #18172b;
+  color: white;
+}
+
+/* Buttons in One Row */
+.button-row {
+  align-items: baseline;
+  display: flex;
+  gap: 10px;
+}
+
+.upload-btn, .clear-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.upload-btn {
+  font-family: 'Mangal', serif !important ;
+  font-size: 13px !important;
+  padding: 7px 12px;
+  background: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.clear-btn {
+  margin-right: 25px;
+  font-family: 'Mangal', serif !important ;
+  font-size: 14px !important;
+  padding: 7px 12px;
+  background: white;
+  color: black;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-right: 10px;
+  font-family: 'Mangal', serif !important;
+  font-size: 13px !important;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+

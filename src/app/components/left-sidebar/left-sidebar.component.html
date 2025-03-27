@@ -1,0 +1,57 @@
+<div class="sidenav" [ngClass]="{ 'sidenav-collapsed': isLeftSidebarCollapsed() }">
+  <div class="logo-container">
+    <button class="logo" (click)="toggleCollapse()">
+      <img src="/assets/images/solcon_logo.png" alt="Logo">
+    </button>
+    @if (!isLeftSidebarCollapsed()) {
+      <button class="btn-close" (click)="closeSidenav()">
+        <img src="assets/svg/close.svg" alt="Close Icon" height="25" width="25"/>
+      </button>
+    }
+  </div>
+  <ul class="sidenav-nav">
+    <li *ngFor="let item of items" class="sidenav-nav-item">
+      <a
+        class="sidenav-nav-link"
+        [routerLink]="['/' + item.routeLink]"
+        routerLinkActive="active"
+        *ngIf="item.type !== 'dropdown'"
+      >
+        <mat-icon class="sidenav-link-icon">{{ item.icon }}</mat-icon>
+        @if (!isLeftSidebarCollapsed()) {
+          <span class="sidenav-link-text">{{ item.label }}</span>
+          <mat-icon class="arrow-icon" *ngIf="item.hasArrow">chevron_right</mat-icon>
+        }
+      </a>
+
+      <!-- Company List Dropdown -->
+      <div class="sidenav-nav-link" [routerLink]="[item.routeLink]"
+           routerLinkActive="active"
+           *ngIf="item.type === 'dropdown'" (click)="toggleCompanyList()">
+        <mat-icon class="sidenav-link-icon">{{ item.icon }}</mat-icon>
+        @if (!isLeftSidebarCollapsed()) {
+          <span class="sidenav-link-text">{{ item.label }}</span>
+          <mat-icon class="arrow-icon">{{ companyListOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+        }
+      </div>
+
+      <!-- Dropdown Content -->
+      @if (companyListOpen && item.type === 'dropdown' && !isLeftSidebarCollapsed()) {
+        <div class="company-list-container">
+          <input type="search" class="search-bar" placeholder="Search..." [(ngModel)]="searchQuery" />
+          <ul class="company-list">
+            @for (company of filteredCompanies(); track company) {
+              <li (click)="selectCompany(company)"
+                  [class.selected]="selectedCompany?.company_id === company.company_id">
+                {{ company.company_name }}
+              </li>
+            }
+          </ul>
+
+        </div>
+      }
+    </li>
+  </ul>
+</div>
+
+

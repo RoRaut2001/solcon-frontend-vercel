@@ -7,5 +7,9 @@ export const API_URL = {
   /**** Auth URL Object ****/
   AUTH:{
     LOGIN: 'auth/login'
+  },
+  REPORT:{
+    SEND_REPORT: 'files/upload'
   }
+
 };

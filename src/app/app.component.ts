@@ -1,4 +1,4 @@
-import {Component, HostListener} from '@angular/core';
+import {Component, HostListener, signal} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {NgxSpinnerComponent} from 'ngx-spinner';
 
@@ -9,6 +9,9 @@ import {NgxSpinnerComponent} from 'ngx-spinner';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
+  isLeftSideBarCollapsed = signal<boolean>(false);
+
   title = 'solcon-frontend';
 
   @HostListener('window:focusin', ['$event'])
