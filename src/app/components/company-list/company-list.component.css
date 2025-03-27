@@ -154,7 +154,7 @@ label {
   }
 }
 
-@media (max-width: 1000px) {  /* For tablets & mobile */
+@media (max-width: 1100px) {  /* For tablets & mobile */
   .dropdowns {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Two items per row */
@@ -181,25 +181,25 @@ label {
 }
 
 
-@media (max-width: 480px) {
-  body {
-    padding: 10px;
-  }
+/*@media (max-width: 480px) {*/
+/*  body {*/
+/*    padding: 10px;*/
+/*  }*/
 
-  .heading {
-    font-size: 16px;
-  }
+/*  .heading {*/
+/*    font-size: 16px;*/
+/*  }*/
 
-  .company-name {
-    font-size: 12px;
-  }
+/*  .company-name {*/
+/*    font-size: 12px;*/
+/*  }*/
 
-  .dropdowns {
-    width: 100%;
-  }
+/*  .dropdowns {*/
+/*    width: 100%;*/
+/*  }*/
 
-  .upload-btn, .clear-btn {
-    font-size: 12px;
-    padding: 5px;
-  }
-}
+/*  .upload-btn, .clear-btn {*/
+/*    font-size: 12px;*/
+/*    padding: 5px;*/
+/*  }*/
+/*}*/
