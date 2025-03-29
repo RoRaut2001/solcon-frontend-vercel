@@ -8,6 +8,29 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #27223D; /* Ensure the background is applied to the entire page */
+}
+
+.body {
+  width: 100%;
+  margin: 0;
+  min-height: 100vh; /* Ensure it covers at least the viewport height */
+  height: auto; /* Allow it to grow if content exceeds viewport */
+  background-color: #27223D;
+  padding: 3rem;
+  position: relative;
+}
+
+.body-trimmed, .body-md-screen {
+  width: 100%;
+  margin: 0;
+}
+
+
 ::ng-deep .ngx-spinner-overlay {
   display: flex !important;
   justify-content: center !important;

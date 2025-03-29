@@ -42,7 +42,6 @@
           <option *ngFor="let q of quarters" [value]="q">{{ q }}</option>
         </select>
       </div>
-
       <div class="dropdown-group">
         <label for="fileInput">Select File</label>
         <button type="button" class="file-select-btn" (click)="openFileDialog()">
@@ -53,10 +52,43 @@
     </div>
 
     <div class="button-row">
-      <button class="upload-btn" type="button" (click)="uploadFile()">Upload</button>
+      <button class="upload-btn" type="button" (click)="uploadFile()" [disabled]="isUploading">
+        {{ isUploading ? 'Uploading...' : 'Upload' }}
+      </button>
       <button class="clear-btn" type="button" (click)="clearFilters()">Clear</button>
     </div>
   </div>
 </form>
+
+<!-- New section for the JSON data table -->
+<div *ngIf="showTable" class="table-section">
+  <div class="table-header">
+    <h3>Extracted Data</h3>
+    <button class="save-data-btn" (click)="saveTableData()">
+      <mat-icon>save</mat-icon> Save Changes
+    </button>
+  </div>
+
+  <app-data-table
+    [jsonData]="finance"
+    (dataChanged)="handleDataChange($event)">
+  </app-data-table>
+
+
+  <app-data-table
+    [jsonData]="financeBalanceSheet"
+    (dataChanged)="handleDataChange($event)">
+  </app-data-table>
+
+  <app-data-table
+    [jsonData]="commBusiness"
+    (dataChanged)="handleDataChange($event)">
+  </app-data-table>
+
+  <app-data-table
+    [jsonData]="technology"
+    (dataChanged)="handleDataChange($event)">
+  </app-data-table>
+</div>
 </body>
 </html>

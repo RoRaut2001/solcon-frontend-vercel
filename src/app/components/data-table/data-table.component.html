@@ -1,0 +1,71 @@
+<div class="table-container">
+  <div *ngIf="!jsonData || jsonData.length === 0" class="no-data">
+    No data available
+  </div>
+
+  <div *ngIf="jsonData && jsonData.length > 0">
+    <!-- Mobile View (Card-based layout) -->
+    <div class="mobile-cards">
+      <div *ngFor="let row of jsonData; let i = index" class="data-card">
+        <div class="card-header">
+          <span>Row {{i + 1}}</span>
+          <div class="card-actions">
+            <button *ngIf="editingRow !== i" class="edit-btn" (click)="startEditing(i)" title="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button *ngIf="editingRow === i" class="save-btn" (click)="saveRow(i)" title="Save">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button *ngIf="editingRow === i" class="cancel-btn" (click)="cancelEditing()" title="Cancel">
+              <mat-icon>close</mat-icon>
+            </button>
+            <button class="delete-btn" (click)="deleteRow(i)" title="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="card-content">
+          <div *ngFor="let col of columns" class="card-field">
+            <div class="field-label">{{col}}:</div>
+            <div class="field-value" *ngIf="editingRow !== i">{{row[col]}}</div>
+            <input *ngIf="editingRow === i"
+                   type="text"
+                   [(ngModel)]="editValues[col]"
+                   class="field-input" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop View (Table-based layout) -->
+    <table class="json-table">
+      <thead>
+      <tr>
+        <th *ngFor="let col of columns">{{formatTableHeader(col)}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of jsonData; let i = index" [class.editing]="editingRow === i">
+        <td *ngFor="let col of columns">
+          <span *ngIf="editingRow !== i">{{row[col] ?? 'NA'}}</span>
+          <input *ngIf="editingRow === i"
+                 type="text"
+                 [(ngModel)]="editValues[col]"
+                 class="edit-input" />
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="action-buttons">
+      <button  title="Edit">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button  title="Save">
+        <mat-icon>check</mat-icon>
+      </button>
+      <button  title="Cancel">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

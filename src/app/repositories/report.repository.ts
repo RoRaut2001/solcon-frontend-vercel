@@ -13,4 +13,10 @@ export class ReportRepository{
   uploadReport(file: File, company_id: string, year: string, quarter: string, month: string): Observable<any>{
     return this.apiClient.uploadFile(API_URL.REPORT.SEND_REPORT, file, {company_id: company_id, year: year, quarter: quarter, month: month});
   }
+
+
+  saveReport(report: Object, company_id: string, year: string, quarter: string, month: string):Observable<any>{
+    return this.apiClient.post(API_URL.REPORT.SAVE_REPORT, {...report, company_id, year, quarter, month});
+  }
+
 }

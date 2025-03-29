@@ -8,13 +8,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgFor, NgIf} from '@angular/common';
 import {ReportRepository} from '../../repositories/report.repository';
 import { NgxSpinnerService } from "ngx-spinner";
+import {DataTableComponent} from '../data-table/data-table.component';
+import {ReportParserService} from '../../services/report-parser.service';
 
 @Component({
   selector: 'app-company-list',
   standalone: true,
   templateUrl: './company-list.component.html',
   imports: [
-    NgFor, NgIf, FormsModule, MatIconModule, ReactiveFormsModule
+    NgFor, NgIf, FormsModule, MatIconModule, ReactiveFormsModule, DataTableComponent
   ],
   styleUrls: ['./company-list.component.css']
 })
@@ -39,7 +41,8 @@ export class CompanyListComponent implements OnInit {
     private toastr: ToastrService,
     private fb: FormBuilder,
     private reportService: ReportRepository,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private reportParserService: ReportParserService
   ) {
     this.reportRepository = reportService;
     this.companyForm = this.fb.group({
@@ -49,6 +52,59 @@ export class CompanyListComponent implements OnInit {
       file: [null, Validators.required]
     });
   }
+
+  // New properties for table data
+  tableData: any[] = [];
+  finance: any[] = [];
+  incomeStatement: any[] = [];
+  commBusiness: any[] = [];
+  showTable = false;
+  financeBalanceSheet: any[] = [];
+  technology: any[] = [];
+
+  handleDataChange(updatedData: any[]): void {
+    this.tableData = updatedData;
+    console.log('Table data updated:', this.tableData);
+
+    // Here you can add logic to save the updated data back to the server if needed
+    this.toastr.success('Data updated successfully.', 'Success!', {
+      timeOut: 2000,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+      progressBar: true,
+    });
+  }
+
+  saveTableData(): void {
+
+    // Example API call (you'll need to implement this in your service)
+    const company_id = this.selectedCompany().companyId.toString();
+    const month = this.companyForm.get('month')?.value;
+    const year = this.companyForm.get('year')?.value.toString();
+    const quarter = this.companyForm.get('quarter')?.value;
+    this.reportRepository.saveReport(
+      {
+        "finance_balance_sheet": this.financeBalanceSheet,
+        "finance": this.finance,
+        "commercial_and_business": this.commBusiness,
+        "technology": this.technology
+      },
+      company_id,
+      year,
+      quarter,
+      month,
+    ).subscribe({
+      next: (response) => {
+        this.toastr.success('Data saved successfully!', 'Success');
+        this.clearFilters();
+      },
+      error: (err) => {
+        this.toastr.error('Failed to save data.', 'Error');
+      }
+
+    });
+  }
+
 
   ngOnInit(): void {
     this.selectedCompany = this.companyService.selectedCompany;
@@ -122,7 +178,35 @@ export class CompanyListComponent implements OnInit {
             positionClass: 'toast-top-right',
             progressBar: true,
           });
-          this.clearFilters();
+          // Handle the response data for the table
+          if (response && response.data && Array.isArray(response.data)) {
+            this.tableData = response.data;
+            this.showTable = true;
+          } else if (response && response.data) {
+            // If data is not an array but an object, convert it to array
+            try {
+              const parsedData = this.reportParserService.parseReportData(response.data);
+              if (parsedData) {
+                this.financeBalanceSheet = [parsedData.financeBalanceSheet];
+                this.finance = [parsedData.finance];
+                this.commBusiness = [parsedData.commercialAndBusiness];
+                this.technology = [parsedData.technology];
+
+                this.showTable = true;
+              } else {
+                this.toastr.warning('Received data is not in expected format.', 'Warning');
+              }
+              this.showTable = true;
+            } catch (err) {
+              console.error('Error parsing JSON data:', err);
+              this.tableData = [];
+              this.showTable = false;
+              this.toastr.warning('Received data is not in expected format.', 'Warning');
+            }
+          } else {
+            this.tableData = [];
+            this.showTable = false;
+          }
         },
         error: (error) => {
           console.error('Upload failed:', error);
@@ -139,6 +223,7 @@ export class CompanyListComponent implements OnInit {
         }
       });
   }
+
 
   logout(): void {
     localStorage.clear();

@@ -45,7 +45,6 @@ html,body {
   font-family: 'Marcellus', serif !important;
   font-size: 13px !important;
   padding: 5px;
-  margin: 5px;
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -54,14 +53,14 @@ html,body {
 .file-select-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
   cursor: pointer;
-  padding: 7px;
+  padding: 8px;
   border-radius: 2px;
   border: 0.5px solid #ccc;
 }
 
 .dropdown-group {
+  align-items: flex-start;
   padding: 1px;
   display: flex;
   flex-direction: column;
@@ -180,26 +179,63 @@ label {
   }
 }
 
+/* Table Section Styles */
+.table-section {
+  margin-top: 30px;
+  padding: 0 15px;
+}
 
-/*@media (max-width: 480px) {*/
-/*  body {*/
-/*    padding: 10px;*/
-/*  }*/
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
 
-/*  .heading {*/
-/*    font-size: 16px;*/
-/*  }*/
+.table-header h3 {
+  margin: 0;
+  color: #333;
+  font-weight: 500;
+}
 
-/*  .company-name {*/
-/*    font-size: 12px;*/
-/*  }*/
+.save-data-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
 
-/*  .dropdowns {*/
-/*    width: 100%;*/
-/*  }*/
+.save-data-btn:hover {
+  background-color: #388e3c;
+}
 
-/*  .upload-btn, .clear-btn {*/
-/*    font-size: 12px;*/
-/*    padding: 5px;*/
-/*  }*/
-/*}*/
+.save-data-btn mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+/* Add additional responsive adjustments */
+@media (max-width: 768px) {
+  .table-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .save-data-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
