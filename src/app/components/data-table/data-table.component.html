@@ -8,19 +8,9 @@
     <div class="mobile-cards">
       <div *ngFor="let row of jsonData; let i = index" class="data-card">
         <div class="card-header">
-          <span>Row {{i + 1}}</span>
           <div class="card-actions">
             <button *ngIf="editingRow !== i" class="edit-btn" (click)="startEditing(i)" title="Edit">
               <mat-icon>edit</mat-icon>
-            </button>
-            <button *ngIf="editingRow === i" class="save-btn" (click)="saveRow(i)" title="Save">
-              <mat-icon>check</mat-icon>
-            </button>
-            <button *ngIf="editingRow === i" class="cancel-btn" (click)="cancelEditing()" title="Cancel">
-              <mat-icon>close</mat-icon>
-            </button>
-            <button class="delete-btn" (click)="deleteRow(i)" title="Delete">
-              <mat-icon>delete</mat-icon>
             </button>
           </div>
         </div>

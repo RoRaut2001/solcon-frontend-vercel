@@ -70,6 +70,7 @@ html, body {
 /* Action Buttons inside cards (Mobile only) */
 .action-buttons,
 .card-actions {
+  justify-content: flex-end;
   display: flex;
   gap: 5px;
 }
@@ -90,13 +91,9 @@ html, body {
   color: #4285f4;
 }
 
-.save-btn {
-  color: #0f9d58;
-}
 
-.cancel-btn,
-.delete-btn {
-  color: #db4437;
+.cancel-btn {
+  color: white;
 }
 
 .table-footer {
@@ -153,7 +150,7 @@ html, body {
   font-weight: 600;
   font-size: 16px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 
