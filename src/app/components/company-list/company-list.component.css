@@ -6,6 +6,17 @@ html,body {
   margin-left: 1px;
 }
 
+h2{
+  font-size: 20px;
+}
+
+.table-name{
+  border-radius: 5px;
+  background-color: #0F0D20;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
 .heading {
   justify-content: space-between;
   text-align: left;
@@ -78,15 +89,19 @@ label {
   border: 0.5px solid red !important;
 }
 
-.dropdown {
+.dropdown{
+  width: 100%;
+  max-width: 250px;
   padding: 8px;
   border-radius: 2px;
   border: 0.5px solid #ccc;
   background: #18172b;
   color: white;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-/* Buttons in One Row */
 .button-row {
   align-items: center;
   display: flex;
@@ -134,9 +149,10 @@ label {
   cursor: pointer;
 }
 
-/* RESPONSIVENESS */
+
 @media (max-width: 1024px) {
   .filter-container {
+    min-width: 250px;
     flex-direction: column;
     align-items: center;
   }
@@ -153,28 +169,36 @@ label {
   }
 }
 
-@media (max-width: 1100px) {  /* For tablets & mobile */
+@media (max-width: 1100px) {
   .dropdowns {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two items per row */
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     width: 100%;
   }
 
+  .file-select-btn{
+    width: 100%;
+    max-width: 250px;
+  }
+
   .dropdown-group {
-    width: 100%; /* Ensures full width */
+    width: 100%;
   }
 
   .button-row {
     display: flex;
-    flex-wrap: nowrap; /* Keep buttons in a single row */
-    justify-content: center; /* Center the buttons */
+    flex-wrap: nowrap;
+    justify-content: center;
     width: 100%;
     gap: 15px;
   }
 
   .upload-btn, .clear-btn {
-    width: auto; /* Make buttons full width for better mobile UI */
+    width: 100%;
+    margin: 10px 0 10px 0 ;
+    max-width: 250px;
+    gap: 10px;
     flex-direction: column;
   }
 }
@@ -187,17 +211,18 @@ label {
 
 .table-header {
   display: flex;
+  min-width: 250px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
   padding: 10px;
-  background-color: #f8f9fa;
+  background-color: #0F0D20;
   border-radius: 5px;
 }
 
 .table-header h3 {
   margin: 0;
-  color: #333;
+  color: white;
   font-weight: 500;
 }
 
@@ -225,7 +250,7 @@ label {
   width: 18px;
 }
 
-/* Add additional responsive adjustments */
+
 @media (max-width: 768px) {
   .table-header {
     flex-direction: column;
@@ -237,5 +262,84 @@ label {
     width: 100%;
     justify-content: center;
   }
+
+
 }
+
+
+@media (max-width: 470px) {
+  html, body {
+    padding: 15px;
+  }
+
+  .heading {
+    flex-direction: column;
+    font-size: 18px;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .company-name {
+    font-size: 13px;
+    text-align: left;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .dropdowns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .dropdown-group {
+    position: relative;
+    width: 100%;
+  }
+
+  .file-select-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .button-row {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .upload-btn,
+  .clear-btn {
+    width: 100%;
+    margin:0;
+    justify-content: center;
+    text-align: center;
+  }
+
+
+  .logout-btn {
+    justify-content: flex-start;
+    width: 100%;
+    padding: 5px 0;
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .save-data-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 

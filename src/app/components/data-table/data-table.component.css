@@ -1,38 +1,36 @@
-html,body{
+html, body {
   background-color: #27223D;
 }
 
 .table-container {
   width: 100%;
+  min-width: 250px;
   margin: 20px 0;
   overflow-x: auto;
+  padding: 0 15px;
 }
 
 .json-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 15px;
-  display: none; /* Hidden on mobile, shown on desktop */
+  display: none;
 }
 
 .json-table th, .json-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #27223D;
   padding: 10px;
   text-align: left;
 }
 
 .json-table th {
+  font-weight: normal;
   background-color: white;
-  color:black;
-
+  color: #0F0D20;
 }
 
 .json-table tr:nth-child(even) {
   background-color: #f9f9f9;
-}
-
-.json-table.body{
-  background-color: #27223D;
 }
 
 .json-table tr.editing {
@@ -46,18 +44,38 @@ html,body{
   border-radius: 4px;
 }
 
-.actions-column {
-  min-width: 120px;
-  text-align: center;
+/* Horizontal scrollbar customization */
+.table-container::-webkit-scrollbar {
+  height: 6px;
 }
 
-.action-buttons {
+.table-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.table-container {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+/* Action Buttons inside cards (Mobile only) */
+.action-buttons,
+.card-actions {
   display: flex;
-  justify-content: center;
   gap: 5px;
 }
 
-.action-buttons button {
+.action-buttons button,
+.card-actions button {
   background: none;
   border: none;
   cursor: pointer;
@@ -76,10 +94,7 @@ html,body{
   color: #0f9d58;
 }
 
-.cancel-btn {
-  color: #db4437;
-}
-
+.cancel-btn,
 .delete-btn {
   color: #db4437;
 }
@@ -115,7 +130,7 @@ html,body{
   color: #666;
 }
 
-/* Mobile View Styles */
+/* MOBILE View - Card layout */
 .mobile-cards {
   display: flex;
   flex-direction: column;
@@ -125,44 +140,50 @@ html,body{
 
 .data-card {
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  background-color: #f2f2f2;
-  padding: 10px;
-  font-weight: bold;
+  background-color: #1e1a30;
+  color: white;
+  padding: 12px 14px;
+  font-weight: 600;
+  font-size: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.card-actions {
-  display: flex;
-  gap: 5px;
-}
-
 .card-content {
-  padding: 10px;
+  padding: 12px 14px;
+  background-color: #fefefe;
 }
 
 .card-field {
-  margin-bottom: 8px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 1px dashed #ccc;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #333;
 }
 
 .field-label {
   font-weight: 500;
-  color: #666;
-  margin-bottom: 2px;
+  color: #444;
+  flex: 1;
 }
 
 .field-value {
-  padding: 4px 0;
+  color: #111;
+  font-weight: 500;
+  text-align: right;
+  flex: 1;
+  max-width: 50%;
+  word-break: break-word;
 }
 
 .field-input {
@@ -172,22 +193,22 @@ html,body{
   border-radius: 4px;
 }
 
-/* Responsive adjustments */
+/* Breakpoints */
 @media (min-width: 768px) {
   .json-table {
-    display: table; /* Show table on desktop */
+    display: table;
   }
 
   .mobile-cards {
-    display: none; /* Hide cards on desktop */
+    display: none;
+  }
+
+  .table-container {
+    padding: 0;
   }
 }
 
 @media (max-width: 767px) {
-  .table-container {
-    padding: 0 10px;
-  }
-
   .table-footer {
     justify-content: center;
   }

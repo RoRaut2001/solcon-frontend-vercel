@@ -62,6 +62,7 @@ export class CompanyListComponent implements OnInit {
   financeBalanceSheet: any[] = [];
   technology: any[] = [];
 
+
   handleDataChange(updatedData: any[]): void {
     this.tableData = updatedData;
     console.log('Table data updated:', this.tableData);

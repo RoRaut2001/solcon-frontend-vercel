@@ -69,26 +69,39 @@
     </button>
   </div>
 
+  <div class="table-name">
+    <h2>Finance Table</h2>
   <app-data-table
     [jsonData]="finance"
     (dataChanged)="handleDataChange($event)">
   </app-data-table>
+  </div>
 
-
-  <app-data-table
+  <div class="table-name">
+    <h2>Finance balance sheet</h2>
+    <app-data-table
     [jsonData]="financeBalanceSheet"
     (dataChanged)="handleDataChange($event)">
   </app-data-table>
+  </div>
 
+<div class="table-name">
+  <h2> Commercial and business</h2>
   <app-data-table
     [jsonData]="commBusiness"
     (dataChanged)="handleDataChange($event)">
   </app-data-table>
+</div>
 
+  <div class="table-name">
+    <h2>
+      Technology
+    </h2>
   <app-data-table
     [jsonData]="technology"
     (dataChanged)="handleDataChange($event)">
   </app-data-table>
+  </div>
 </div>
 </body>
 </html>

@@ -27,7 +27,7 @@
         <div class="card-content">
           <div *ngFor="let col of columns" class="card-field">
             <div class="field-label">{{col}}:</div>
-            <div class="field-value" *ngIf="editingRow !== i">{{row[col]}}</div>
+            <div class="field-value" *ngIf="editingRow !== i">{{row[col] ?? 'NA'}}</div>
             <input *ngIf="editingRow === i"
                    type="text"
                    [(ngModel)]="editValues[col]"
@@ -56,16 +56,5 @@
       </tr>
       </tbody>
     </table>
-    <div class="action-buttons">
-      <button  title="Edit">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button  title="Save">
-        <mat-icon>check</mat-icon>
-      </button>
-      <button  title="Cancel">
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
   </div>
 </div>
