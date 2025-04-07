@@ -17,54 +17,46 @@ export class DataTableComponent implements OnChanges {
   columns: string[] = [];
   editingRow: number | null = null;
   editValues: any = {};
+  isEditable = false; // <-- Controls whether table can be edited
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['jsonData'] && this.jsonData && this.jsonData.length > 0) {
-      // Extract all unique column keys from all objects
       this.columns = Array.from(
         new Set(this.jsonData.flatMap(item => Object.keys(item)))
       );
+      this.editValues = { ...this.jsonData[0] }; // Clone the only row
     }
   }
 
   startEditing(index: number): void {
+    if (!this.isEditable) return; // Prevent editing if toggle is off
     this.editingRow = index;
     this.editValues = { ...this.jsonData[index] };
   }
 
-  cancelEditing(): void {
-    this.editingRow = null;
-    this.editValues = {};
-  }
-
-  saveRow(index: number): void {
-    this.jsonData[index] = { ...this.editValues };
+  save(): void {
+    this.jsonData[0] = { ...this.editValues };
     this.dataChanged.emit(this.jsonData);
-    this.editingRow = null;
+    this.toggleEdit();
   }
 
-  deleteRow(index: number): void {
-    if (confirm('Are you sure you want to delete this row?')) {
-      this.jsonData.splice(index, 1);
-      this.dataChanged.emit(this.jsonData);
+
+
+  toggleEdit(): void {
+    this.isEditable = !this.isEditable;
+
+    /* only initialize editValues when enabling edit mode */
+    if (this.isEditable && this.jsonData.length > 0) {
+      this.editValues = { ...this.jsonData[0] }; /* copy existing values */
     }
   }
 
-  addRow(): void {
-    const newRow: any = {};
-    // Initialize with empty values for all columns
-    this.columns.forEach(col => {
-      newRow[col] = '';
-    });
 
-    this.jsonData.push(newRow);
-    this.startEditing(this.jsonData.length - 1);
-  }
 
-   formatTableHeader(snakeCase: string): string {
+  formatTableHeader(snakeCase: string): string {
     return snakeCase
-      .split('_') // Split by underscore
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
-      .join(' '); // Join with space
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   }
 }

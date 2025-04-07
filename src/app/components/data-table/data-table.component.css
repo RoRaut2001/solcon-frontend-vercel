@@ -204,6 +204,38 @@ html, body {
     padding: 0;
   }
 }
+.table-footer {
+  bottom: 20px;
+  right: 20px;
+}
+
+.edit-actions{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-footer button {
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  font-family: 'Mangal', serif !important;
+  font-size: 13px !important;
+  padding: 7px 12px;
+  background: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+
+.table-footer button:hover {
+  background: #f0f0f0;
+}
+
+
 
 @media (max-width: 767px) {
   .table-footer {

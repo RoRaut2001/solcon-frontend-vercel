@@ -56,7 +56,6 @@ export class CompanyListComponent implements OnInit {
   // New properties for table data
   tableData: any[] = [];
   finance: any[] = [];
-  incomeStatement: any[] = [];
   commBusiness: any[] = [];
   showTable = false;
   financeBalanceSheet: any[] = [];
@@ -65,9 +64,6 @@ export class CompanyListComponent implements OnInit {
 
   handleDataChange(updatedData: any[]): void {
     this.tableData = updatedData;
-    console.log('Table data updated:', this.tableData);
-
-    // Here you can add logic to save the updated data back to the server if needed
     this.toastr.success('Data updated successfully.', 'Success!', {
       timeOut: 2000,
       closeButton: true,
@@ -77,19 +73,30 @@ export class CompanyListComponent implements OnInit {
   }
 
   saveTableData(): void {
-
-    // Example API call (you'll need to implement this in your service)
     const company_id = this.selectedCompany().companyId.toString();
     const month = this.companyForm.get('month')?.value;
     const year = this.companyForm.get('year')?.value.toString();
     const quarter = this.companyForm.get('quarter')?.value;
+
+    // Convert array to object (assuming only 1 item)
+    const finance = this.finance.length ? this.finance[0] : {};
+    const financeBalanceSheet = this.financeBalanceSheet.length ? this.financeBalanceSheet[0] : {};
+    const commBusiness = this.commBusiness.length ? this.commBusiness[0] : {};
+    const technology = this.technology.length ? this.technology[0] : {};
+
+    const payload = {
+      company_id,
+      year,
+      quarter,
+      month,
+      finance_balance_sheet: financeBalanceSheet,
+      finance: finance,
+      commercial_and_business: commBusiness,
+      technology: technology
+    };
+
     this.reportRepository.saveReport(
-      {
-        "finance_balance_sheet": this.financeBalanceSheet,
-        "finance": this.finance,
-        "commercial_and_business": this.commBusiness,
-        "technology": this.technology
-      },
+      payload,
       company_id,
       year,
       quarter,
@@ -102,9 +109,9 @@ export class CompanyListComponent implements OnInit {
       error: (err) => {
         this.toastr.error('Failed to save data.', 'Error');
       }
-
     });
   }
+
 
 
   ngOnInit(): void {

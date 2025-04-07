@@ -7,21 +7,15 @@
     <!-- Mobile View (Card-based layout) -->
     <div class="mobile-cards">
       <div *ngFor="let row of jsonData; let i = index" class="data-card">
-        <div class="card-header">
-          <div class="card-actions">
-            <button *ngIf="editingRow !== i" class="edit-btn" (click)="startEditing(i)" title="Edit">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </div>
-        </div>
+
         <div class="card-content">
           <div *ngFor="let col of columns" class="card-field">
             <div class="field-label">{{col}}:</div>
-            <div class="field-value" *ngIf="editingRow !== i">{{row[col] ?? 'NA'}}</div>
-            <input *ngIf="editingRow === i"
+            <span *ngIf="!isEditable">{{ jsonData[0][col] ?? 'NA' }}</span>
+            <input *ngIf="isEditable"
                    type="text"
                    [(ngModel)]="editValues[col]"
-                   class="field-input" />
+                   class="edit-input" />
           </div>
         </div>
       </div>
@@ -31,14 +25,14 @@
     <table class="json-table">
       <thead>
       <tr>
-        <th *ngFor="let col of columns">{{formatTableHeader(col)}}</th>
+        <th *ngFor="let col of columns">{{ formatTableHeader(col) }}</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let row of jsonData; let i = index" [class.editing]="editingRow === i">
+      <tr>
         <td *ngFor="let col of columns">
-          <span *ngIf="editingRow !== i">{{row[col] ?? 'NA'}}</span>
-          <input *ngIf="editingRow === i"
+          <span *ngIf="!isEditable">{{ jsonData[0][col] ?? 'NA' }}</span>
+          <input *ngIf="isEditable"
                  type="text"
                  [(ngModel)]="editValues[col]"
                  class="edit-input" />
@@ -48,3 +42,11 @@
     </table>
   </div>
 </div>
+<div class="table-footer">
+  <button *ngIf="!isEditable" class="edit-btn" (click)="toggleEdit()">Edit</button>
+  <div *ngIf="isEditable" class="edit-actions">
+    <button class="save-btn" (click)="save()">Save</button>
+    <button class="edit-btn" (click)="toggleEdit()">Cancel</button>
+  </div>
+</div>
+
