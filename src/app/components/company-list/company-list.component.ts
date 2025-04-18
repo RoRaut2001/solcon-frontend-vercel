@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { NgFor, NgIf} from '@angular/common';
 import {ReportRepository} from '../../repositories/report.repository';
-import { NgxSpinnerService } from "ngx-spinner";
 import {DataTableComponent} from '../data-table/data-table.component';
 import {ReportParserService} from '../../services/report-parser.service';
 
@@ -22,8 +21,9 @@ import {ReportParserService} from '../../services/report-parser.service';
 })
 export class CompanyListComponent implements OnInit {
   isUploading = false;
+  isLoading = false;
   reportRepository: ReportRepository;
-  selectedCompany = signal<{ companyId: number; companyName: string }>({ companyId: 1, companyName: '' });
+  selectedCompany = signal<{ companyId: string; companyName: string }>({ companyId: '', companyName: '' });
   companyForm: FormGroup;
   selectedFileName: string | null = null;
   selectedFile: File | null = null;
@@ -32,8 +32,36 @@ export class CompanyListComponent implements OnInit {
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  years: number[] = [2023, 2022, 2021, 2020, 2019];
+  years: number[] = [];
   quarters: string[] = ['Q1', 'Q2', 'Q3', 'Q4'];
+  loadingMessages: string[] = [
+    'Parsing financial data...',
+    'Analyzing balance sheets...',
+    'Extracting business insights...',
+    'Building tables...',
+    'Almost there...'
+  ];
+  currentMessageIndex = 0;
+  currentLoadingMessage = '';
+  loadingInterval: any = null;
+  startLoadingMessages(): void {
+    this.currentMessageIndex = 0;
+    this.currentLoadingMessage = this.loadingMessages[0];
+
+    this.loadingInterval = setInterval(() => {
+      this.currentMessageIndex = (this.currentMessageIndex + 1) % this.loadingMessages.length;
+      this.currentLoadingMessage = this.loadingMessages[this.currentMessageIndex];
+    }, 2000);
+  }
+
+  stopLoadingMessages(): void {
+    if (this.loadingInterval) {
+      clearInterval(this.loadingInterval);
+      this.loadingInterval = null;
+    }
+    this.currentLoadingMessage = '';
+  }
+
 
   constructor(
     private router: Router,
@@ -41,7 +69,6 @@ export class CompanyListComponent implements OnInit {
     private toastr: ToastrService,
     private fb: FormBuilder,
     private reportService: ReportRepository,
-    private spinner: NgxSpinnerService,
     private reportParserService: ReportParserService
   ) {
     this.reportRepository = reportService;
@@ -55,12 +82,20 @@ export class CompanyListComponent implements OnInit {
 
   // New properties for table data
   tableData: any[] = [];
-  finance: any[] = [];
-  commBusiness: any[] = [];
   showTable = false;
-  financeBalanceSheet: any[] = [];
+
+
+  /* new table data */
+  commercialAndBusiness: any[] = [];
+  finance: any[] = [];
   technology: any[] = [];
 
+  ngOnInit(): void {
+    const currentYear = new Date().getFullYear();
+    const range = 5;
+    this.years = Array.from({ length: range * 2 + 1 }, (_, i) => currentYear - range + i);
+      this.selectedCompany = this.companyService.selectedCompany;
+  }
 
   handleDataChange(updatedData: any[]): void {
     this.tableData = updatedData;
@@ -73,6 +108,7 @@ export class CompanyListComponent implements OnInit {
   }
 
   saveTableData(): void {
+    this.isLoading = true;
     const company_id = this.selectedCompany().companyId.toString();
     const month = this.companyForm.get('month')?.value;
     const year = this.companyForm.get('year')?.value.toString();
@@ -80,8 +116,7 @@ export class CompanyListComponent implements OnInit {
 
     // Convert array to object (assuming only 1 item)
     const finance = this.finance.length ? this.finance[0] : {};
-    const financeBalanceSheet = this.financeBalanceSheet.length ? this.financeBalanceSheet[0] : {};
-    const commBusiness = this.commBusiness.length ? this.commBusiness[0] : {};
+    const commercialAndBusiness = this.commercialAndBusiness.length ? this.commercialAndBusiness[0] : {};
     const technology = this.technology.length ? this.technology[0] : {};
 
     const payload = {
@@ -89,9 +124,8 @@ export class CompanyListComponent implements OnInit {
       year,
       quarter,
       month,
-      finance_balance_sheet: financeBalanceSheet,
       finance: finance,
-      commercial_and_business: commBusiness,
+      commercial_and_business: commercialAndBusiness,
       technology: technology
     };
 
@@ -104,18 +138,19 @@ export class CompanyListComponent implements OnInit {
     ).subscribe({
       next: (response) => {
         this.toastr.success('Data saved successfully!', 'Success');
+        console.log(`Response: ${response}`);
         this.clearFilters();
+        this.showTable = false;
+
       },
       error: (err) => {
         this.toastr.error('Failed to save data.', 'Error');
+        console.error(`Error: ${err}`);
+      },
+      complete: () => {
+        this.isLoading = false;
       }
     });
-  }
-
-
-
-  ngOnInit(): void {
-    this.selectedCompany = this.companyService.selectedCompany;
   }
 
   openFileDialog() {
@@ -165,16 +200,12 @@ export class CompanyListComponent implements OnInit {
     const year = this.companyForm.get('year')?.value.toString();
     const quarter = this.companyForm.get('quarter')?.value;
 
-    console.log('Uploading file with details:', {
-      fileName: this.selectedFile.name,
-      company_id,
-      year,
-      quarter,
-      month
-    });
 
-    this.isUploading = true; // Disable upload button
-    this.spinner.show(); // Show loading spinner
+    this.isUploading = true;
+    this.currentMessageIndex = 0;
+    this.currentLoadingMessage = this.loadingMessages[0];
+
+    this.startLoadingMessages();
 
     this.reportRepository.uploadReport(this.selectedFile, company_id, year, quarter, month)
       .subscribe({
@@ -193,11 +224,11 @@ export class CompanyListComponent implements OnInit {
           } else if (response && response.data) {
             // If data is not an array but an object, convert it to array
             try {
-              const parsedData = this.reportParserService.parseReportData(response.data);
+              const parsedData = this.reportParserService.parseReportData(response.data, response.year, response.quarter, response.month);
               if (parsedData) {
-                this.financeBalanceSheet = [parsedData.financeBalanceSheet];
+                // this.financeBalanceSheet = [parsedData.financeBalanceSheet];
                 this.finance = [parsedData.finance];
-                this.commBusiness = [parsedData.commercialAndBusiness];
+                this.commercialAndBusiness = [parsedData.commercialAndBusiness];
                 this.technology = [parsedData.technology];
 
                 this.showTable = true;
@@ -210,6 +241,8 @@ export class CompanyListComponent implements OnInit {
               this.tableData = [];
               this.showTable = false;
               this.toastr.warning('Received data is not in expected format.', 'Warning');
+            } finally {
+              this.isUploading = false;
             }
           } else {
             this.tableData = [];
@@ -218,6 +251,8 @@ export class CompanyListComponent implements OnInit {
         },
         error: (error) => {
           console.error('Upload failed:', error);
+          clearInterval(this.loadingInterval);
+          this.isUploading = false;
           this.toastr.error('File upload failed. Please try again.', 'Error!', {
             timeOut: 3000,
             closeButton: true,
@@ -226,12 +261,11 @@ export class CompanyListComponent implements OnInit {
           });
         },
         complete: () => {
-          this.isUploading = false; // Enable upload button
-          this.spinner.hide(); // Hide spinner after response
+          this.isUploading = false;
+          this.stopLoadingMessages();
         }
       });
   }
-
 
   logout(): void {
     localStorage.clear();

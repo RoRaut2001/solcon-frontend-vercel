@@ -19,13 +19,6 @@
 <form [formGroup]="companyForm">
   <div class="filter-container">
     <div class="dropdowns">
-      <div class="dropdown-group">
-        <label for="month">Month</label>
-        <select id="month" class="dropdown" formControlName="month">
-          <option value="" disabled selected>Select</option>
-          <option *ngFor="let month of months" [value]="month">{{ month }}</option>
-        </select>
-      </div>
 
       <div class="dropdown-group">
         <label for="year">Year</label>
@@ -40,6 +33,14 @@
         <select id="quarter" class="dropdown" formControlName="quarter">
           <option value="" disabled selected>Select</option>
           <option *ngFor="let q of quarters" [value]="q">{{ q }}</option>
+        </select>
+      </div>
+
+      <div class="dropdown-group">
+        <label for="month">Month</label>
+        <select id="month" class="dropdown" formControlName="month">
+          <option value="" disabled selected>Select</option>
+          <option *ngFor="let month of months" [value]="month">{{ month }}</option>
         </select>
       </div>
       <div class="dropdown-group">
@@ -64,36 +65,37 @@
 <div *ngIf="showTable" class="table-section">
   <div class="table-header">
     <h3>Extracted Data</h3>
-    <button class="save-data-btn" (click)="saveTableData()">
-      <mat-icon>save</mat-icon> Save Changes
+    <button [disabled]="isLoading" class="upload-btn" (click)="saveTableData()">
+      Save Changes
+      <div *ngIf="isLoading" class="spinner"></div>
     </button>
   </div>
 
   <div class="table-name">
-    <h2>Finance Table</h2>
+    <h2>Commercial & Budget</h2>
   <app-data-table
+    [jsonData]="commercialAndBusiness"
+    (dataChanged)="handleDataChange($event)">
+  </app-data-table>
+  </div>
+
+  <div class="table-name">
+    <h2>Finance</h2>
+    <app-data-table
     [jsonData]="finance"
     (dataChanged)="handleDataChange($event)">
   </app-data-table>
   </div>
 
-  <div class="table-name">
-    <h2>Finance balance sheet</h2>
-    <app-data-table
-    [jsonData]="financeBalanceSheet"
-    (dataChanged)="handleDataChange($event)">
-  </app-data-table>
-  </div>
-
 <div class="table-name">
-  <h2> Commercial and business</h2>
+  <h2>Technology</h2>
   <app-data-table
-    [jsonData]="commBusiness"
+    [jsonData]="technology"
     (dataChanged)="handleDataChange($event)">
   </app-data-table>
 </div>
 
-  <div class="table-name">
+  <!-- <div class="table-name">
     <h2>
       Technology
     </h2>
@@ -101,7 +103,13 @@
     [jsonData]="technology"
     (dataChanged)="handleDataChange($event)">
   </app-data-table>
-  </div>
+  </div> -->
 </div>
 </body>
+<div *ngIf="isUploading" class="loading-overlay">
+  <div class="loading-message">
+    <p>{{ currentLoadingMessage }}</p>
+  </div>
+</div>
+
 </html>

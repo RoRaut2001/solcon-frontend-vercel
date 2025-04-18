@@ -1,15 +1,17 @@
 import {Component, EventEmitter, input, Input, OnInit, output, Output} from '@angular/core';
-import {NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
+import {RouterModule, NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {FormsModule} from '@angular/forms';
 import {CompanyService} from '../../services/company.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-left-sidebar',
   standalone: true,
   templateUrl: './left-sidebar.component.html',
   imports: [
+    RouterModule,
     RouterLink,
     RouterLinkActive,
     CommonModule,
@@ -18,26 +20,26 @@ import {CompanyService} from '../../services/company.service';
   ],
   styleUrls: ['./left-sidebar.component.css']
 })
+
+
 export class LeftSidebarComponent implements OnInit {
 
-  constructor(private router: Router, private companyService: CompanyService) { }
+  constructor(
+    private router: Router,
+    private companyService: CompanyService,
+    private toastr: ToastrService,
+  ) { }
 
 
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
 
+
   items = [
     {
-      routeLink: 'dashboard/home',  // Ensure it correctly navigates inside the dashboard
-      icon: 'dashboard',
-      label: 'Dashboard',
-      type: 'link',
-      hasArrow: true,
-    },
-    {
-      routeLink: 'dashboard/company-list', // Change this to correctly match the child route
+      routeLink: 'dashboard/company-list',
       icon: 'list',
-      label: 'Company Lists',
+      label: 'Company List',
       type: 'dropdown',
       hasArrow: true,
     },
@@ -45,19 +47,10 @@ export class LeftSidebarComponent implements OnInit {
 
   companyListOpen = false;
   searchQuery = '';
-  selectedCompany: { company_id: number, company_name: string } | null = null;
+  selectedCompany: { company_id: string, company_name: string } | null = null;
+  isLoading = false;
+  companies: { company_id: string; company_name: string }[] = [];
 
-  companies = [
-    { "company_id": 1, "company_name": "Solcon Capital" },
-    { "company_id": 2, "company_name": "4Di Capital Fund" },
-    { "company_id": 3, "company_name": "ESET" },
-    { "company_id": 4, "company_name": "CBMS" },
-    { "company_id": 5, "company_name": "CIPCIF" },
-    { "company_id": 6, "company_name": "Inala Broadcast" },
-    { "company_id": 7, "company_name": "InQuba" },
-    { "company_id": 8, "company_name": "Seacom" },
-    { "company_id": 9, "company_name": "LifeQ" }
-  ]
 
 
   toggleCompanyList() {
@@ -74,13 +67,13 @@ export class LeftSidebarComponent implements OnInit {
     );
   }
 
-  selectCompany(company: { company_id: number; company_name: string }): void {
+  selectCompany(company: { company_id: string; company_name: string }): void {
     this.selectedCompany = company;
     this.companyService.setSelectedCompany(company.company_id, company.company_name);
     console.log('Selected Company:', company);
   }
 
-  trackCompany(index: number, company: { company_id: number; company_name: string }): number {
+  trackCompany(index: number, company: { company_id: string; company_name: string }): string {
     return company.company_id;
   }
 
@@ -94,7 +87,29 @@ export class LeftSidebarComponent implements OnInit {
         }
       }
     });
+    this.getCompanyList();
   }
+
+  getCompanyList(): void {
+    this.isLoading = true;
+    this.companyService.getCompanyList().subscribe({
+      next: (response) => {
+        /* Map the response to match the internal company object structure */
+        this.companies = response.map((company: any) => ({
+          company_id: company.companyId,
+          company_name: company.companyName
+        }));
+      },
+      error: (err) => {
+        this.toastr.error('Failed to fetch company list.', err.message);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
+  }
+
 
   toggleCollapse(): void {
     this.changeIsLeftSidebarCollapsed.emit(!this.isLeftSidebarCollapsed());
